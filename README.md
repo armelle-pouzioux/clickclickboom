@@ -7,7 +7,7 @@ Choisissez qui mène votre révolution : **Rachel** (Keke), **Karl** (Marx) ou *
 
 ## Jouer
 
-- En ligne : `https://<votre-compte>.github.io/<nom-du-depot>/` (voir [Publier le jeu](#publier-le-jeu))
+- En ligne : https://armelle-pouzioux.github.io/clickclickboom/
 - En local : voir [Développement](#développement)
 
 ## Règles en bref
@@ -55,7 +55,7 @@ docker run --rm -p 8080:80 click-click-boom    # http://localhost:8080
 
 L'image est construite en deux étapes : Node construit le jeu, puis nginx sert les fichiers générés.
 
-L'image publiée par la CI : `docker run --rm -p 8080:80 ghcr.io/<votre-compte>/<nom-du-depot>:latest`
+L'image publiée par la CI : `docker run --rm -p 8080:80 ghcr.io/armelle-pouzioux/clickclickboom:latest`
 
 ## Architecture
 
@@ -105,7 +105,7 @@ Les étapes 2 et 3 n'ont lieu que si les tests passent.
 
 1. Créez un dépôt vide sur GitHub, puis :
    ```bash
-   git remote add origin https://github.com/<votre-compte>/<nom-du-depot>.git
+   git remote add origin https://github.com/armelle-pouzioux/clickclickboom.git
    git push -u origin main
    ```
 2. Dans le dépôt, **Settings → Pages → Build and deployment → Source : GitHub Actions**.
