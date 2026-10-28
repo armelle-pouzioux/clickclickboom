@@ -74,7 +74,7 @@
     "label": "Acheter Assemblée insurrectionnelle (7500 Révolutionnaires)",
     "cost": 7500,
     "type": "autoclick",
-    "description": "Un parlement du peuple s’installe, qui organise la résistance. +250 révolutionnaires par seconde.",
+    "description": "Un parlement du peuple s’installe, qui organise la résistance.",
     "clicksPerMinute": 500
   },
   {
@@ -82,7 +82,7 @@
     "label": "Acheter Milice du peuple (10000 Révolutionnaires)",
     "cost": 10000,
     "type": "autoclick",
-    "description": "Des groupes d’autodéfense assurent la sécurité révolutionnaire. +500 révolutionnaires par seconde.",
+    "description": "Des groupes d’autodéfense assurent la sécurité révolutionnaire.",
     "clicksPerMinute": 500
   },
   {
@@ -91,14 +91,14 @@
     "cost": 15000,
     "type": "clickPower",
     "power": 500,
-    "description": "La vérité circule, la révolte se propage. +5000 révolutionnaires par clic."
+    "description": "La vérité circule, la révolte se propage."
   },
   {
     "id": "international",
     "label": "Acheter Soutien international (25000 Révolutionnaires)",
     "cost": 25000,
     "type": "autoclick",
-    "description": "Des camarades du monde entier rejoignent la lutte. +1000 révolutionnaires toutes les 0.5s.",
+    "description": "Des camarades du monde entier rejoignent la lutte.",
     "clicksPerMinute": 1000
   },
   {
@@ -106,7 +106,7 @@
     "label": "Acheter Zone en autogestion (50000 Révolutionnaires)",
     "cost": 50000,
     "type": "autoclick",
-    "description": "Un territoire libéré s’organise sans hiérarchie. +2500 révolutionnaires toutes les 0.5s.",
+    "description": "Un territoire libéré s’organise sans hiérarchie.",
     "clicksPerMinute": 2000
   },
   {
@@ -115,54 +115,54 @@
     "cost": 100000,
     "type": "clickPower",
     "power": 1000,
-    "description": "La société se transforme. Vous gagnez +20000 révolutionnaires par clic."
-  },
-  {
-    "id": "utopie",
-    "label": "Proclamer l'Utopie (250000 Révolutionnaires)",
-    "cost": 250000,
-    "type": "autoclick",
-    "description": "Le rêve devient réalité. +5000 révolutionnaires par minute.",
-    "clicksPerMinute": 5000
+    "description": "La société se transforme."
   },
   {
     "id": "hacker",
     "label": "Recruter un Hacker anarchiste (125000 Révolutionnaires)",
     "cost": 125000,
     "type": "autoclick",
-    "description": "Il pirate les systèmes ennemis pour rediriger les ressources. +3000 révolutionnaires toutes les 0.5s.",
+    "description": "Il pirate les systèmes ennemis pour rediriger les ressources.",
     "clicksPerMinute": 3000
   },
   {
+    "id": "utopie",
+    "label": "Proclamer l'Utopie (250000 Révolutionnaires)",
+    "cost": 250000,
+    "type": "autoclick",
+    "description": "Le rêve devient réalité.",
+    "clicksPerMinute": 5000
+  },
+  {
     "id": "universite",
-    "label": "Fonder une Université populaire (300000 Révolutionnaires)",
+    "label": "Fonder une Université populaire (250000 Révolutionnaires)",
     "cost": 250000,
     "type": "clickPower",
     "power": 10000,
-    "description": "L'éducation libère les esprits. +30000 révolutionnaires par clic."
+    "description": "L'éducation libère les esprits."
   },
   {
     "id": "reseau_autogere",
     "label": "Créer un Réseau d'entraide autogéré (500000 Révolutionnaires)",
     "cost": 500000,
     "type": "autoclick",
-    "description": "Un vaste réseau solidaire multiplie l'effort collectif. +7500 révolutionnaires toutes les 0.5s.",
+    "description": "Un vaste réseau solidaire multiplie l'effort collectif.",
     "clicksPerMinute": 30000
   },
   {
-    "id": "Alliance Mondiale",
+    "id": "alliance",
     "label": "Sceller une Alliance révolutionnaire mondiale (1000000 Révolutionnaires)",
     "cost": 1000000,
     "type": "clickPower",
     "power": 20000,
-    "description": "Les peuples du monde unissent leur force. +75000 révolutionnaires par clic."
+    "description": "Les peuples du monde unissent leur force."
   },
   {
     "id": "transformation",
     "label": "Entamer une Transformation radicale (2000000 Révolutionnaires)",
     "cost": 2000000,
     "type": "autoclick",
-    "description": "La révolution entre dans une nouvelle phase. +15000 révolutionnaires toutes les 0.5s.",
+    "description": "La révolution entre dans une nouvelle phase : le Grand Soir approche.",
     "clicksPerMinute": 60000
   }
 ]

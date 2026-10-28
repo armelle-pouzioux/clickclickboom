@@ -3,63 +3,84 @@ document.addEventListener("DOMContentLoaded", () => {
     const partiInput = document.getElementById("parti");
     const descriptionContainer = document.getElementById("description");
 
-    const savedParti = localStorage.getItem("parti");
-    const savedChefImage = localStorage.getItem("chef-image");
+    migrateOldSave();
+    renderParties();
 
-    if (savedParti) {
-        partiInput.value = savedParti;
+    // le chef choisi est le bouton radio coché, qu'on ait cliqué sur l'image ou sur le nom
+    function getSelectedChef() {
+        const checked = document.querySelector('input[name="chef-image"]:checked');
+        if (!checked) return null;
+        const img = document.querySelector(`label[for="${checked.id}"] .chef-image`);
+        return img ? img.getAttribute("data-image") : null;
     }
-    if (savedChefImage) {
-        const selected = document.querySelector(`img[data-image="${savedChefImage}"]`);
-        if (selected) selected.classList.add("selected");
-    }
-
-    const chefImages = document.querySelectorAll(".chef-image");
-    let selectedChef = null;
-
-    chefImages.forEach(chef => {
-        chef.addEventListener("click", () => {
-            // Retirer la sélection précédente
-            chefImages.forEach(img => img.classList.remove("selected"));
-            // Ajouter la nouvelle sélection
-            chef.classList.add("selected");
-            selectedChef = chef.getAttribute("data-image");
-            localStorage.setItem("chef-image", selectedChef);
-        });
-    });
-
-    document.addEventListener("DOMContentLoaded", () => {
-        const chefImage = document.getElementById("chef-image");
-        const savedChefImage = localStorage.getItem("chef-image");
-    
-        if (savedChefImage) {
-            chefImage.src = savedChefImage;
-        }
-    });
-
-    localStorage.getItem("chef-image")
-
 
     form.addEventListener("submit", (event) => {
         event.preventDefault();
 
         const parti = partiInput.value.trim();
-
-        if (parti) {
-            localStorage.setItem("parti", parti);
-        }
+        const selectedChef = getSelectedChef();
 
         if (!selectedChef) {
-            alert("Choisissez un.e chef.fe !");
+            showToast("Choisissez un.e chef.fe !");
             return;
         }
 
+        const party = createParty(parti, selectedChef);
+
         showToast("Toutes les bonnes choses ont un début !");
         setTimeout(() => {
-            window.location.href = "game.html";
+            window.location.href = `game.html?partie=${party.id}`;
         }, 2000);
     });
-    
+
+    // liste des parties en cours : on peut en reprendre une ou en supprimer
+    function renderParties() {
+        const container = document.getElementById("parties");
+        const list = document.getElementById("parties-list");
+        const parties = listParties();
+
+        list.innerHTML = "";
+        container.style.display = parties.length ? "" : "none";
+
+        parties.forEach(party => {
+            const counter = Number.parseInt(localStorage.getItem(partyKey(party.id, "counter"))) || 0;
+
+            const item = document.createElement("li");
+            item.className = "party-item";
+
+            const img = document.createElement("img");
+            img.src = party.chef;
+            img.alt = CHEFS[party.chef] || "";
+
+            const info = document.createElement("div");
+            info.className = "party-info";
+            const name = document.createElement("strong");
+            name.textContent = party.parti || "Révolution";
+            const details = document.createElement("span");
+            details.textContent = `${CHEFS[party.chef] || ""} · ${counter.toLocaleString("fr-FR")} révolutionnaires`;
+            info.append(name, details);
+
+            const play = document.createElement("a");
+            play.className = "party-play";
+            play.href = `game.html?partie=${party.id}`;
+            play.textContent = "Jouer";
+
+            const remove = document.createElement("button");
+            remove.type = "button";
+            remove.className = "party-delete";
+            remove.textContent = "✕";
+            remove.title = "Supprimer cette partie";
+            remove.addEventListener("click", () => {
+                if (confirm(`Supprimer la partie « ${name.textContent} » ?`)) {
+                    deleteParty(party.id);
+                    renderParties();
+                }
+            });
+
+            item.append(img, info, play, remove);
+            list.appendChild(item);
+        });
+    }
 
     const descriptions = {
         chef1: "Rachel Keke, militante ouvrière, a mené la grève de l'hôtel Ibis en 2019 pour de meilleures conditions de travail.",

@@ -6,11 +6,16 @@
     --white-: #fff;
 }
 
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 header{
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
-    padding: 5vh 25px;
-    height: 5vh;
+    gap: 10px;
+    padding: 20px 25px;
     align-items: center;
     color: var(--white-);
     
@@ -27,37 +32,45 @@ header{
 
 body{
     font-family: var(--font-1);
+    text-transform: uppercase;
     background-image: url(img/08debf74-c78d-4af6-860e-0f266f4a3d65.png);
     background-size: cover;
     background-position: center;
     background-repeat: repeat; 
+    background-attachment: fixed;
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
     margin: 0;
 }
 
+/* 3 colonnes sur grand écran, qui passent les unes sous les autres quand la place manque */
 main{
     width: 100%;
-    height: 100vh;
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-around;
-    align-items: start;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 0 16px 20px;
+}
+
+main > section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1 1 320px;
+    max-width: 440px;
+    min-width: 0;
 }
 
 .game-container{
-    top: 0;
     display: flex;
     justify-content: space-around;
     flex-flow: wrap;
     border: solid;
-    height: 100%;
-    padding:20px;
-    padding-bottom: 50px;
-    margin-bottom:20px;
-    width: 400px;
-    max-width: 400px;
-    text-align: justify;
+    padding: 20px;
+    width: 100%;
+    text-align: left;
     background: rgba(255, 255, 255, 0.85);    
 }
 
@@ -89,6 +102,7 @@ h1, h2, h3, h4 {
 
 p{
     font-family: var(--font-2);
+    font-size: 0.9em;
 }
 
 #main-click-area{
@@ -113,36 +127,47 @@ p{
     align-items: end;
     height: 80px;
     width: 85px;
-    background-color: rgb(255, 139, 139);
     border: solid black;
  }
 
 
-/* Jauge de progression */
+/* Jauge de progression : le pourcentage est posé au-dessus de la barre,
+   en blanc cerné de noir pour rester lisible sur toutes les couleurs */
 .progress-container {
+    position: relative;
     width: 90%;
+    height: 24px;
     align-self: center;
-    background-color: #e5e7eb;  /* équivalent de bg-gray-200 */
+    background-color: #6b7280;
     border-radius: 100px;      /* rounded-full */
     margin-top: 1rem;
     border: solid black 3px;
+    overflow: hidden;
 }
   
 .progress-bar {
-    background-color: #2563eb;  /* équivalent de bg-blue-600 */
-    font-size: 0.75rem;         /* text-xs */
-    font-weight: 500;           /* medium */
-    color: #dbeafe;             /* text-blue-100 */
-    text-align: center;
-    padding: 0.125rem 0;        /* p-0.5 */
-    line-height: 1;             /* leading-none */
+    height: 100%;
+    background-color: #16a34a;
     border-radius: 100px;      /* rounded-full */
     width: 0%;
-    transition: width 0.5s ease-in-out;
+    transition: width 0.5s ease-in-out, background-color 0.5s;
+}
 
+.progress-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--font-1);
+    font-size: 0.75rem;
+    color: var(--white-);
+    text-shadow: 2px 0 black, -2px 0 black, 0 2px black, 0 -2px black;
+    pointer-events: none;
 }
 
 button {
+    text-transform: uppercase;
     width: auto;
     min-height: 30px;
     padding: 0 25px;
@@ -171,14 +196,7 @@ button {
 }
   
   .repression-bar {
-    font-size: 0.75rem;
-    font-weight: 500;
-    text-align: center;
-    padding: 0.25rem 0;
-    line-height: 1;
-    width: 1%;
-    transition: width 0.5s ease-in-out;
-    
+    width: 0%;
 }
   
   /* Couleurs dynamiques pour la répression :
@@ -187,23 +205,19 @@ button {
      - 50-75% : Orange
      - >= 75% : Rouge */
 .repression-low {
-    background-color: #e1de10; /* jaune */
-    color: #d1fae5;
+    background-color: #eab308; /* jaune */
 }
   
 .repression-med-low {
-    background-color: #e09f26; /* orange */
-    color: #fef9c3;
+    background-color: #ea580c; /* orange */
 }
   
 .repression-med-high {
-    background-color: #e10c0c; /* rouge */
-    color: #ffedd5;
+    background-color: #dc2626; /* rouge */
 }
   
 .repression-high {
-    background-color: #000000; /* noir */
-    color: #fecaca;
+    background-color: #7f1d1d; /* rouge sombre */
 }
   
   /* Style pour le message de malus */
@@ -216,9 +230,621 @@ button {
 
 .stats-container{
     width: 100%;
-    justify-content: left;
+}
 
-    p{
-        width: 100%;
+/* Statistiques : une tuile par valeur */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    width: 100%;
+}
+
+.stat-tile {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px;
+    background: var(--white-);
+    border: solid 3px var(--black-);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.25);
+    min-width: 0;
+}
+
+.stat-wide {
+    grid-column: 1 / -1;
+}
+
+.stat-label {
+    font-family: var(--font-2);
+    font-size: 0.75em;
+    font-weight: bold;
+    color: #6b7280;
+}
+
+.stat-value {
+    font-family: var(--font-1);
+    font-size: 1em;
+    color: var(--black-);
+    overflow-wrap: anywhere;
+}
+
+.stat-wide .stat-value {
+    font-family: var(--font-2);
+    font-weight: bold;
+    font-size: 0.95em;
+}
+
+.stat-sub {
+    font-family: var(--font-2);
+    font-size: 0.75em;
+    color: #6b7280;
+}
+
+/* valeur modifiée par un effet temporaire */
+.stat-up {
+    border-color: #16a34a;
+    background: #f0fdf4;
+
+    .stat-value, .stat-sub {
+        color: #15803d;
     }
+}
+
+.stat-down {
+    border-color: #b91c1c;
+    background: #fef2f2;
+
+    .stat-value, .stat-sub {
+        color: #b91c1c;
+    }
+}
+
+/* Overlay : aide, victoire, game over */
+.overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 2000;
+}
+
+.overlay.hidden {
+    display: none;
+}
+
+.overlay-content {
+    position: relative;
+    width: min(700px, calc(100% - 32px));
+    max-height: 85vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 30px;
+    border: solid black 4px;
+    background: rgba(255, 255, 255, 0.95);
+    text-align: left;
+
+    h2, h3 {
+        margin-top: 0;
+    }
+}
+
+.overlay-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 0 10px;
+    background-color: var(--black-);
+    color: var(--white-);
+}
+
+.help-button {
+    font-family: var(--font-1);
+    font-size: 0.7em;
+    background-color: var(--white-);
+    border: solid black 3px;
+}
+
+.help-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-2);
+    font-size: 0.9em;
+
+    th, td {
+        padding: 6px;
+        border-bottom: solid 1px #ccc;
+        vertical-align: top;
+    }
+
+    th {
+        text-align: left;
+    }
+
+    tr.owned {
+        opacity: 0.6;
+    }
+}
+
+#replay-button {
+    display: block;
+    margin: 20px auto 0;
+    padding: 10px 30px;
+    font-family: var(--font-1);
+    background-color: var(--red-);
+    color: var(--white-);
+}
+
+
+/* Notification après un achat : au centre du header sur desktop, en bas de l'écran sur mobile */
+header {
+    position: relative;
+}
+
+.toast {
+    visibility: hidden;
+    width: max-content;
+    max-width: min(600px, 45vw);
+    box-sizing: border-box;
+    background-color: var(--red-);
+    color: var(--white-);
+    font-family: var(--font-2);
+    text-align: center;
+    border: solid black 3px;
+    padding: 12px 24px;
+    position: absolute;
+    z-index: 1500;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.toast.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+.upgrade-button small,
+#special-upgrades button small {
+    font-family: var(--font-2);
+    font-weight: bold;
+    color: var(--black-);
+}
+
+/* boutons d'achat (bonus, recruteurs, propagandistes) */
+#special-upgrades button,
+.upgrade-button {
+    padding: 10px 20px;
+    border: solid 3px var(--red-);
+    line-height: 1.4;
+}
+
+/* achetable : bien visible et cliquable */
+#special-upgrades button:not(:disabled),
+.upgrade-button:not(:disabled) {
+    background-color: var(--white-);
+    color: var(--black-);
+    cursor: pointer;
+}
+
+#special-upgrades button:not(:disabled):hover,
+.upgrade-button:not(:disabled):hover {
+    background-color: #fbeaea;
+}
+
+/* pas assez de ressources : grisé */
+#special-upgrades button:disabled,
+.upgrade-button:disabled {
+    background-color: #e5e5e5;
+    border-color: #b8b8b8;
+    color: #8a8a8a;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+#special-upgrades button:disabled small,
+.upgrade-button:disabled small {
+    color: #8a8a8a;
+}
+
+/* déjà acheté */
+#special-upgrades button.bought {
+    background-color: #dcfce7;
+    border-color: #16a34a;
+    color: #14532d;
+    cursor: default;
+}
+
+#special-upgrades button.bought::before {
+    content: "✓ ";
+    font-weight: bold;
+}
+
+#special-upgrades button.bought small {
+    color: #14532d;
+}
+
+
+/* En-tête : accueil, bulle du chef */
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.home-button {
+    background-color: var(--red-);
+    color: var(--white-);
+    border: solid black 3px;
+}
+
+/* la bulle s'affiche à gauche du chef, centrée verticalement sur lui */
+.chef-container {
+    position: relative;
+}
+
+.chef-bubble {
+    position: absolute;
+    top: 50%;
+    right: calc(100% + 16px);
+    transform: translateY(-50%);
+    z-index: 1500;
+    width: min(500px, calc(100vw - 130px));
+    box-sizing: border-box;
+    padding: 14px 18px;
+    background: var(--white-);
+    border: solid black 3px;
+    font-family: var(--font-2);
+    font-weight: normal;
+    line-height: 1.4;
+    color: var(--black-);
+}
+
+/* petite pointe vers le chef */
+.chef-bubble::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: -17px;
+    transform: translateY(-50%);
+    border: 7px solid transparent;
+    border-left-color: black;
+}
+
+.chef-bubble.hidden {
+    display: none;
+}
+
+
+/* RESPONSIVE ______________________________________ */
+.header-left button,
+.help-button {
+    white-space: nowrap;
+}
+
+/* tablette : le bloc de clic passe en premier, sur toute la largeur */
+@media (max-width: 1100px) {
+    #firstblock {
+        order: -1;
+        flex-basis: 100%;
+        max-width: 900px;
+    }
+}
+
+/* téléphone */
+@media (max-width: 600px) {
+    header {
+        padding: 12px 16px;
+    }
+
+    header button {
+        margin: 0;
+        padding: 0 10px;
+        font-size: 0.7em;
+    }
+
+    .header-left {
+        gap: 6px;
+    }
+
+    .help-label {
+        display: none;
+    }
+
+    .help-button {
+        min-width: 36px;
+    }
+
+    .chef-button {
+        width: 60px;
+        height: 60px;
+    }
+
+    #chef-img {
+        width: 70px;
+    }
+
+    main {
+        gap: 16px;
+        padding: 0 12px 16px;
+    }
+
+    main > section {
+        gap: 16px;
+        flex-basis: 100%;
+    }
+
+    .game-container {
+        padding: 14px;
+    }
+
+    #bouton {
+        padding: 15px 20px;
+        margin: 10px 5px;
+    }
+
+    #special-upgrades button,
+    .upgrade-button {
+        width: 100%;
+        padding: 10px 12px;
+    }
+
+    /* bulle du chef en bas pour ne pas cacher le jeu */
+    .chef-bubble {
+        padding: 10px 12px;
+        font-size: 0.85em;
+    }
+
+    .overlay-content {
+        padding: 20px 16px;
+    }
+
+    .help-table {
+        font-size: 0.8em;
+    }
+
+    .toast {
+        position: fixed;
+        top: auto;
+        bottom: 16px;
+        transform: translateX(-50%);
+        width: calc(100% - 32px);
+        max-width: none;
+        padding: 10px 14px;
+    }
+}
+
+
+/* Journal de la révolution : historique des achats et récit */
+.journal-list {
+    list-style: none;
+    width: 100%;
+    max-height: 320px;
+    overflow-y: auto;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-2);
+}
+
+.journal-entry {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 10px;
+    padding: 8px 10px;
+    margin-bottom: 6px;
+    border-left: solid 4px var(--black-);
+    background: rgba(255, 255, 255, 0.7);
+    line-height: 1.4;
+
+    time {
+        font-size: 0.75em;
+        color: #6b7280;
+        padding-top: 2px;
+    }
+
+    span {
+        flex: 1 1 200px;
+    }
+
+    small {
+        flex-basis: 100%;
+        font-weight: bold;
+        font-size: 0.8em;
+        color: var(--black-);
+    }
+}
+
+.journal-achat {
+    border-left-color: var(--red-);
+}
+
+.journal-palier {
+    border-left-color: #16a34a;
+    font-weight: bold;
+}
+
+.journal-repression {
+    border-left-color: #7f1d1d;
+    background: #fde2e2;
+}
+
+.journal-recit {
+    border-left-color: #a16207;
+    font-style: italic;
+}
+
+
+/* Effets temporaires en cours (sous le compteur) */
+.active-effects {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+}
+
+.effect-chip {
+    padding: 4px 10px;
+    border: solid 2px;
+    font-family: var(--font-2);
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.effect-good {
+    border-color: #16a34a;
+    background: #dcfce7;
+    color: #14532d;
+}
+
+.effect-bad {
+    border-color: #7f1d1d;
+    background: #fde2e2;
+    color: #7f1d1d;
+}
+
+/* Décisions */
+.choice-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.choice-option {
+    flex: 1 1 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+    padding: 14px;
+    background: var(--white-);
+    border: solid 3px var(--red-);
+    font-family: var(--font-2);
+    text-align: left;
+
+    small {
+        font-size: 0.85em;
+        line-height: 1.4;
+    }
+}
+
+.choice-option:hover {
+    background: #fbeaea;
+}
+
+.journal-choix {
+    border-left-color: #1d4ed8;
+}
+
+
+/* Multiplicateur d'achat des recruteurs */
+.quantity-selector {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+}
+
+.quantity-option {
+    margin: 0;
+    padding: 4px 10px;
+    min-height: 0;
+    font-family: var(--font-1);
+    font-size: 0.6em;
+    background-color: #e5e5e5;
+    color: #8a8a8a;
+    border: solid 2px #b8b8b8;
+    border-radius: 0;
+}
+
+/* le joueur a de quoi payer ce lot */
+.quantity-option.affordable {
+    background-color: var(--white-);
+    color: var(--black-);
+    border-color: var(--black-);
+}
+
+.quantity-option.selected {
+    background-color: var(--red-);
+    color: var(--white-);
+    border-color: black;
+}
+
+
+/* barre de progression dans la tuile des statistiques */
+.stat-progress {
+    width: 100%;
+    margin-top: 0;
+}
+
+
+/* Force du mouvement : révolutionnaires + bonus accumulés (bloc principal) */
+.movement {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.movement-title {
+    font-family: var(--font-1);
+    font-size: 0.7em;
+}
+
+.movement-progress {
+    width: 90%;
+    margin-top: 0;
+}
+
+.movement-progress .progress-bar {
+    background-color: var(--red-);
+}
+
+.movement-detail {
+    font-family: var(--font-2);
+    font-size: 0.6em;
+    color: #6b7280;
+    text-align: center;
+}
+
+
+/* Grand Soir : bouton d'insurrection */
+.insurrection-button {
+    margin-top: 12px;
+    padding: 14px 20px;
+    font-family: var(--font-1);
+    font-size: 0.75em;
+    line-height: 1.6;
+    background-color: var(--red-);
+    color: var(--white-);
+    border: solid 3px black;
+    box-shadow: 4px 4px 0 black;
+    animation: insurrection-pulse 1.5s ease-in-out infinite;
+}
+
+.insurrection-button:disabled {
+    background-color: #6b7280;
+    box-shadow: none;
+    cursor: not-allowed;
+    animation: none;
+}
+
+.insurrection-button.hidden {
+    display: none;
+}
+
+@keyframes insurrection-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+}
+
+.insurrection-table tfoot td {
+    border-top: solid 2px var(--black-);
 }

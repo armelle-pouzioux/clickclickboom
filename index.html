@@ -7,8 +7,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&family=Press+Start+2P&display=swap" rel="stylesheet">
     <title>ClickCLickBoom</title>
-    <link rel="stylesheet" href="launcher.css">
-    <script src="launcher.js" defer></script>
+    <link rel="stylesheet" href="launcher.css?v=17">
+    <script src="saves.js?v=17" defer></script>
+    <script src="launcher.js?v=17" defer></script>
     
 </head>
 
@@ -20,7 +21,13 @@
     <main>
         <div id="description" class="description-container"></div>
 
+        <section id="parties" class="parties-container">
+            <h2>Vos parties en cours</h2>
+            <ul id="parties-list" class="parties-list"></ul>
+        </section>
+
         <div class="form-container">
+            <h2>Nouvelle partie</h2>
             <form id="revolution-form" class="revolution-form">
 
                 <div class="name-revolution">

@@ -1,25 +1,32 @@
 <!DOCTYPE html> 
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&family=Press+Start+2P&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
-  <!-- <script src="launcher.js" defer></script> -->
+  <link rel="stylesheet" href="style.css?v=17">
+  <script src="saves.js?v=17" defer></script>
+  <script src="script.js?v=17" defer></script>
   
 
   <title>Click CLick Boom</title>
 </head>
 <body>
   <header>
-    <button id="reset-button" class="reset-button">DO NOT PUSH</button>
+    <div class="header-left">
+      <button id="home-button" class="home-button" title="Revenir à l'accueil">ACCUEIL</button>
+      <button id="help-button" class="help-button" title="Règles et bonus">?<span class="help-label"></span></button>
+    </div>
     <!-- <h1>Click Click Boom</h1> -->
-    <button class="chef-button" id="chef-button">
-      <img class="chef-image" id="chef-img" src=""></img>
-    </button>
+    <div id="toast" class="toast"></div>
+    <div class="chef-container">
+      <div id="chef-bubble" class="chef-bubble hidden"></div>
+      <button class="chef-button" id="chef-button" title="Parler à votre chef.fe">
+        <img class="chef-image" id="chef-img" src="img/chef1.png" alt="">
+      </button>
+    </div>
   </header>
 
   <main>
@@ -27,8 +34,8 @@
       <article id="repression-container" class="game-container repression-container">
         <h2>REPRESSION</h2>
         <div class="progress-container">
-          <div id="repression-bar" class="progress-bar repression-bar">0%</div>
-
+          <div id="repression-bar" class="progress-bar repression-bar"></div>
+          <span id="repression-label" class="progress-label">0%</span>
         </div>
         
         <p id="malus-message" class="malus-message"></p>
@@ -49,10 +56,22 @@
       
         <button class="title" id="bouton">ON N'ARRÊTE PAS UN PEUPLE QUI CLICK</button>
         <p><span id="counter">0</span> révolutionnaires sont en révolution.</p>
-  
-        <div id="progress-container" class="progress-container">
-          <div id="progress-bar" class="progress-bar">0%</div>
+        <div id="active-effects" class="active-effects"></div>
+
+        <div class="movement">
+          <span class="movement-title">✊ Force du mouvement</span>
+          <div class="progress-container movement-progress">
+            <div id="movement-bar" class="progress-bar"></div>
+            <span id="movement-label" class="progress-label">0%</span>
+          </div>
+          <span id="movement-detail" class="movement-detail"></span>
         </div>
+        <button id="insurrection-button" class="insurrection-button hidden"></button>
+      </article>
+
+      <article id="journal-container" class="game-container journal-container">
+        <h2>Journal de la révolution</h2>
+        <ul id="journal-list" class="journal-list"></ul>
       </article>
     </section>
 
@@ -63,6 +82,7 @@
         <h3 id="recruiter-count">
           Recruteurs: <span id="recruiter-value">0</span>
         </h3>
+        <div id="recruiter-quantity" class="quantity-selector" aria-label="Nombre de recruteurs à acheter"></div>
         <button id="buy-recruiter" class="button upgrade-button">Former un recruteur</button>
         
         <h3 id="propagandist-count">
@@ -72,9 +92,17 @@
       </article> 
 
       <article id="stats" class="game-container stats-container">
-        <h3>STATS</h3>
+        <h2>Statistiques</h2>
+        <div id="stats-grid" class="stats-grid"></div>
       </article>
     </section>
   </main>
+
+  <div id="overlay" class="overlay hidden">
+    <div class="overlay-content">
+      <button id="overlay-close" class="overlay-close" title="Fermer">✕</button>
+      <div id="overlay-body"></div>
+    </div>
+  </div>
 </body>
 </html>
