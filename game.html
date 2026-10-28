@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
@@ -6,12 +6,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&family=Press+Start+2P&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=17">
-  <script src="saves.js?v=17" defer></script>
-  <script src="script.js?v=17" defer></script>
-  
-
-  <title>Click CLick Boom</title>
+  <script type="module" src="/src/game-page.js"></script>
+  <title>Click Click Boom</title>
 </head>
 <body>
   <header>
@@ -19,7 +15,6 @@
       <button id="home-button" class="home-button" title="Revenir à l'accueil">ACCUEIL</button>
       <button id="help-button" class="help-button" title="Règles et bonus">?<span class="help-label"></span></button>
     </div>
-    <!-- <h1>Click Click Boom</h1> -->
     <div id="toast" class="toast"></div>
     <div class="chef-container">
       <div id="chef-bubble" class="chef-bubble hidden"></div>
@@ -44,10 +39,6 @@
       <article id="special-upgrades" class="game-container">
         <h2>Bonus & Améliorations</h2>
       </article>
-
-      <!-- <article id="malus-container" class="game-container">
-        <h2>Malus</h2>
-      </article> -->
     </section>
 
     <section id="firstblock">
@@ -77,8 +68,6 @@
 
     <section id="thirdblock">
       <article id="unit-container" class="game-container">
-        <!-- <h2>Unités Révolutionnaires</h2> -->
-  
         <h3 id="recruiter-count">
           Recruteurs: <span id="recruiter-value">0</span>
         </h3>

@@ -33,7 +33,7 @@ header{
 body{
     font-family: var(--font-1);
     text-transform: uppercase;
-    background-image: url(img/08debf74-c78d-4af6-860e-0f266f4a3d65.png);
+    background-image: url("../assets/background.png");
     background-size: cover;
     background-position: center;
     background-repeat: repeat; 
@@ -847,4 +847,15 @@ header {
 
 .insurrection-table tfoot td {
     border-top: solid 2px var(--black-);
+}
+
+/* pas d'animation pour qui a demandé à réduire les mouvements */
+@media (prefers-reduced-motion: reduce) {
+    .insurrection-button {
+        animation: none;
+    }
+
+    .progress-bar {
+        transition: none;
+    }
 }

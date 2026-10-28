@@ -27,7 +27,7 @@ body {
     justify-content: space-between;
     align-items: center;
     min-height: 100vh;
-    background-image: url(img/08debf74-c78d-4af6-860e-0f266f4a3d65.png);
+    background-image: url("../assets/background.png");
     background-size: cover;       
     background-repeat: no-repeat; 
     background-attachment: fixed;
