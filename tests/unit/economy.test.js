@@ -77,9 +77,10 @@ describe("force du mouvement", () => {
     expect(strength.target).toBe(4345410);
   });
 
-  it("utilise une échelle logarithmique et atteint 100 % à l'objectif", () => {
+  it("monte doucement au début et atteint 100 % à l'objectif", () => {
     expect(movementPercent(testState({ counter: 0 }))).toBe(0);
-    expect(Math.floor(movementPercent(testState({ counter: 1000 })))).toBe(45);
+    expect(Math.floor(movementPercent(testState({ counter: 10 })))).toBe(7);
+    expect(Math.floor(movementPercent(testState({ counter: 1000 })))).toBe(18);
     expect(movementPercent(testState({ counter: 5_000_000 }))).toBe(100);
   });
 });

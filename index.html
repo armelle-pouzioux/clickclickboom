@@ -17,15 +17,12 @@
     </header>
 
     <main>
-        <div id="description" class="description-container"></div>
-
         <section id="parties" class="parties-container">
             <h2>Vos parties en cours</h2>
             <ul id="parties-list" class="parties-list"></ul>
         </section>
 
         <div class="form-container">
-            <h2>Nouvelle partie</h2>
             <form id="revolution-form" class="revolution-form">
 
                 <div class="name-revolution">
@@ -33,7 +30,7 @@
                 <input type="text" id="parti" name="parti" required></div>
 
                 <div class="chef-revolution">
-                    <label for="chef-image">Qui mène votre révolution ?</label>
+                    <label for="chef-image">Qui mène votre révolution&nbsp;?</label>
 
                     <div class="image-selector">
                         <input type="radio" id="chef1" name="chef-image" value="chef1">
@@ -55,6 +52,8 @@
                             <h4 class="text">OLYMPE</h4>
                         </label>
                     </div>
+
+                    <p id="description" class="description-container" aria-live="polite"></p>
                 </div>
 
                 <div class="container">

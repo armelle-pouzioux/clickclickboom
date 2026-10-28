@@ -24,6 +24,10 @@ export const MILESTONE_REWARDS = {
   propagandists: { rate: 0.05, label: "+5 % de protection" },
 };
 
+// scale of the "Force du mouvement" bar: 0.2 follows the playing time
+// (measured on simulated games: 14 % at 10 % of the game, 41 % at half, 76 % at 90 %)
+export const MOVEMENT_SCALE = 0.2;
+
 export const SAFE_REPRESSION = 0.95;   // an event never pushes repression above 95 %
 export const REPRESSION_COOLDOWN = 180; // seconds after a malus ends before the repression can strike again
 

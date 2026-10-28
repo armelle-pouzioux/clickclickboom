@@ -94,8 +94,9 @@ export function createRenderer({ state, onBuyUpgrade, getQuantity }) {
     const percent = movementPercent(state);
     byId("movement-bar").style.width = `${percent}%`;
     byId("movement-label").textContent = `${Math.floor(percent)}%`;
-    byId("movement-detail").textContent =
-      `${fr(strength.current)} révolutionnaires + ${fr(strength.invested)} en bonus = ${fr(strength.value)} / ${fr(strength.target)}`;
+    byId("movement-detail").textContent = state.grandSoirUnlocked
+      ? "Le Grand Soir est débloqué : lancez l'insurrection !"
+      : `${fr(strength.value)} / ${fr(strength.target)} · révolutionnaires + valeur des bonus achetés`;
   }
 
   function renderEffects() {

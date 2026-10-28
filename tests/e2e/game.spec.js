@@ -40,7 +40,7 @@ test("la partie est conservée après rechargement", async ({ page }) => {
 
 test("les statistiques et la force du mouvement s'affichent", async ({ page }) => {
   await openGame(page, { data: { counter: "800", unlockedItems: ["tract", "affiche", "megaphone"] } });
-  await expect(page.locator("#movement-detail")).toHaveText("800 révolutionnaires + 160 en bonus = 960 / 4 345 410");
+  await expect(page.locator("#movement-detail")).toHaveText("960 / 4 345 410 · révolutionnaires + valeur des bonus achetés");
   await expect(page.locator(".stat-tile")).not.toHaveCount(0);
   await expect(page.locator("#stats-grid")).toContainText("3 / 22 bonus");
 });

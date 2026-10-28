@@ -101,6 +101,8 @@ Le workflow [.github/workflows/ci-cd.yml](.github/workflows/ci-cd.yml) s'exécut
 
 Les étapes 2 et 3 n'ont lieu que si les tests passent.
 
+Explication détaillée, étape par étape : [docs/CI-CD.md](docs/CI-CD.md).
+
 ## Publier le jeu
 
 1. Créez un dépôt vide sur GitHub, puis :

@@ -94,18 +94,27 @@ form.addEventListener("submit", (event) => {
   }, 2000);
 });
 
-// description of each leader on hover
-Object.entries(CHEF_DESCRIPTIONS).forEach(([chefId, text]) => {
+// description of the leader under the portraits: the one hovered, otherwise the one chosen
+function showDescription(chefId) {
+  description.textContent = CHEF_DESCRIPTIONS[chefId] || "";
+}
+
+function selectedChefId() {
+  return document.querySelector('input[name="chef-image"]:checked')?.id;
+}
+
+Object.keys(CHEF_DESCRIPTIONS).forEach((chefId) => {
   const label = document.querySelector(`label[for="${chefId}"]`);
   if (!label) return;
-  label.addEventListener("mouseover", () => {
-    description.style.display = "block";
-    description.textContent = text;
-  });
-  label.addEventListener("mouseout", () => {
-    description.style.display = "none";
-  });
+  label.addEventListener("mouseenter", () => showDescription(chefId));
+  label.addEventListener("mouseleave", () => showDescription(selectedChefId()));
 });
+
+document.querySelectorAll('input[name="chef-image"]').forEach((radio) => {
+  radio.addEventListener("change", () => showDescription(radio.id));
+});
+
+showDescription(selectedChefId());
 
 migrateOldSave();
 renderParties();

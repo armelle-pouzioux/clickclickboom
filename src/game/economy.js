@@ -1,5 +1,5 @@
 // Numbers of the game: production, costs, protection, repression. No DOM here.
-import { COSTS, MILESTONE_REWARDS, PROTECTION } from "./config.js";
+import { COSTS, MILESTONE_REWARDS, MOVEMENT_SCALE, PROTECTION } from "./config.js";
 
 export function isBought(state, upgrade) {
   return state.unlockedItems.includes(upgrade.id);
@@ -89,12 +89,12 @@ export function movementStrength(state) {
   return { current, invested, value: current + invested, target };
 }
 
-// logarithmic scale: 10 → 100 moves the bar as much as 100 000 → 1 000 000,
-// which follows the playing time (the end of the game goes much faster)
+// the strength grows a thousand times faster at the end than at the start; raising it to the
+// power MOVEMENT_SCALE makes the bar follow the playing time (about 40 % at mid-game)
 export function movementPercent(state) {
   const { value, target } = movementStrength(state);
   if (value >= target) return 100;
-  return (Math.log10(1 + value) / Math.log10(1 + target)) * 100;
+  return Math.pow(value / target, MOVEMENT_SCALE) * 100;
 }
 
 export function gameProgress(state) {
